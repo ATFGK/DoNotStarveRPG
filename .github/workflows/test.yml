@@ -1,0 +1,50 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Run tests
+        run: dotnet test
+
+  build:
+    runs-on: ubuntu-latest
+   
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.100'
+
+
+      - name: Build
+        run: |
+          cd ClassLibrary1
+          dotnet publish -r win-x64 -f net6.0 -c Release --self-contained false
+
+      - name: 复制文件
+        run: |
+            cp 说明.txt ClassLibrary1/bin/Release/net6.0/win-x64/publish/
+            
+      - name: CI Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test-win-x64-Release
+          path: |
+              ClassLibrary1/bin/Release/net6.0/win-x64/publish/说明.txt
+              ClassLibrary1/bin/Release/net6.0/win-x64/publish/饥荒RPG.dll
