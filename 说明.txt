@@ -1,0 +1,2 @@
+使用说明：
+将文件里的【饥荒RPG.dll文件】复制到TShock的ServerPlugins文件中后启动服务器即可生效！
