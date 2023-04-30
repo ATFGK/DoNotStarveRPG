@@ -1,0 +1,46 @@
+name: Build + Deploy
+
+on: 
+  release:
+    types: [prereleased,released]
+
+defaults:
+  run:
+    shell: pwsh
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    name: 资源构建
+    steps:
+     - uses: actions/checkout@v3
+       with:
+          submodules: 'recursive'
+
+     - name: 安装.NET
+       uses: actions/setup-dotnet@v1
+       with:
+        dotnet-version: '6.0.100'
+        
+     - name: 构建
+       run: |
+          cd ClassLibrary1
+          dotnet publish -r win-x64 -f net6.0 -c Release --self-contained false
+
+     - name: 打包
+       run: |
+          Compress-Archive -Path ./ClassLibrary1/bin/Release/net6.0/win-x64/publish/饥荒RPG.dll,说明.txt Release-win-x64.zip
+          
+     
+     
+     - name: 上传资源
+       uses: svenstaro/upload-release-action@v2
+       with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: Release-win-x64.zip
+        overwrite: true
+      
+     
+
+
