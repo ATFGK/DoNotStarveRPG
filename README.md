@@ -1,6 +1,8 @@
 # DoNotStarveRPG
 TShock插件：饥荒RPG
+
 装备、任务和升级
+
 ![6](https://user-images.githubusercontent.com/62204605/235333518-4e1f82d3-ba42-46bb-aa7e-9c0df4629c4c.png)
 
 ![7](https://user-images.githubusercontent.com/62204605/235333532-d487ac49-6103-482a-8254-da9cdfc1f07c.png)
